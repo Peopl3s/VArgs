@@ -48,7 +48,8 @@ namespace VArgs
 
 
 
-	template <typename U, template<typename T> class Container, std::size_t... Indices,typename std::enable_if_t<!std::is_same<Container<U>,std::queue<U>>::value && !std::is_same<Container<U>,std::stack<U>>::value && !std::is_same<Container<U>, std::priority_queue<U>>::value , std::nullptr_t> = nullptr>
+	template <typename U, template<typename T> class Container, std::size_t... Indices,
+	typename std::enable_if_t<!std::is_same<Container<U>,std::queue<U>>::value && !std::is_same<Container<U>,std::stack<U>>::value && !std::is_same<Container<U>, std::priority_queue<U>>::value , std::nullptr_t> = nullptr>
 	constexpr auto Impl(const Container<U>& v, std::index_sequence<Indices...>)
 	 {
 
@@ -57,7 +58,8 @@ namespace VArgs
 	}
 
 
-	template <typename U, template<typename T> class Container, std::size_t... Indices,typename std::enable_if_t<std::is_same<Container<U>,std::queue<U>>::value, std::nullptr_t> = nullptr>
+	template <typename U, template<typename T> class Container, std::size_t... Indices,
+	typename std::enable_if_t<std::is_same<Container<U>,std::queue<U>>::value, std::nullptr_t> = nullptr>
 	constexpr auto Impl(const Container<U>& v, std::index_sequence<Indices...>) 
 	{
 
@@ -66,7 +68,8 @@ namespace VArgs
 	}
 
 
-	template <typename U, template<typename T> class Container, std::size_t... Indices,typename std::enable_if_t<std::is_same<Container<U>,std::stack<U>>::value ||std::is_same<Container<U>,std::priority_queue<U>>::value, std::nullptr_t> = nullptr>
+	template <typename U, template<typename T> class Container, std::size_t... Indices,
+	typename std::enable_if_t<std::is_same<Container<U>,std::stack<U>>::value ||std::is_same<Container<U>,std::priority_queue<U>>::value, std::nullptr_t> = nullptr>
 	constexpr auto Impl(const Container<U>& v, std::index_sequence<Indices...>) 
 	{
 
@@ -75,7 +78,8 @@ namespace VArgs
 	}
 
 
-	template <std::size_t N, typename U, template<typename T> class Container, typename std::enable_if_t<!std::is_same<Container<U>,std::forward_list<U>>::value, std::nullptr_t> = nullptr>
+	template <std::size_t N, typename U, template<typename T> class Container, 
+	typename std::enable_if_t<!std::is_same<Container<U>,std::forward_list<U>>::value, std::nullptr_t> = nullptr>
 	auto containerToTuple(const Container<U>& v) {
 		
 		assert(v.size()>= N);
@@ -84,7 +88,8 @@ namespace VArgs
 	}
 
 
-	template <std::size_t N, typename U, template<typename T> class Container,typename std::enable_if_t<std::is_same<Container<U>,std::forward_list<U>>::value, std::nullptr_t> = nullptr>
+	template <std::size_t N, typename U, template<typename T> class Container,
+	typename std::enable_if_t<std::is_same<Container<U>,std::forward_list<U>>::value, std::nullptr_t> = nullptr>
 	auto containerToTuple(const Container<U>& v) 
 	{
 		assert(static_cast<std::size_t>(distance(begin(v),end(v)))>= N);
